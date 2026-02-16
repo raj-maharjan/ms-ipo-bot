@@ -1,6 +1,6 @@
 # IPO Bot
 
-A FastAPI-based bot that automates IPO applications for users via Telegram. It integrates with the CDSC MeroShare API and Google Sheets for user data management, and supports fuzzy keyword search for company names.
+A FastAPI-based bot that automates IPO applications for users via Telegram. It integrates with the CDSC MeroShare API and Google Sheets for user data management, and supports fuzzy keyword search for company names. It also has scheduler.
 
 ## Features
 
