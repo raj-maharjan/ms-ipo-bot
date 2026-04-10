@@ -231,9 +231,9 @@ def get_applicable_issues():
                 continue
                 
             # Filter by statusName = "CREATE_APPROVE"
-            if issue.get("statusName") != "CREATE_APPROVE":
-                print(f"Skipping issue - statusName: {issue.get('statusName')} (expected: CREATE_APPROVE)")
-                continue
+            # if issue.get("statusName") != "CREATE_APPROVE":
+            #     print(f"Skipping issue - statusName: {issue.get('statusName')} (expected: CREATE_APPROVE)")
+            #     continue
                 
             # Filter by shareTypeName in ("IPO", "FPO", "RESERVED")
             share_type_name = issue.get("shareTypeName", "")
@@ -243,7 +243,7 @@ def get_applicable_issues():
                 
             # Filter out issues that are already in process
             action = issue.get("action", "")
-            if action == "inProcess":
+            if action == "inProcess" or action == "edit":
                 print(f"Skipping issue - action: {action} (already applied): {issue.get('scrip')} - {issue.get('companyName')}")
                 continue
                 
