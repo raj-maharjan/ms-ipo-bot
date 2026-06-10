@@ -10,6 +10,7 @@ A FastAPI-based bot that automates IPO applications for users via Telegram. It i
 - **Fuzzy Keyword Search:** Intelligent company name matching.
 - **Flexible Message Parsing:** Supports various Telegram message formats, including kitta (share quantity) extraction.
 - **Error Handling:** Comprehensive error handling and user feedback.
+
 - **Multi-User Support:** Handles multiple users with different credentials.
 
 ## Prerequisites
