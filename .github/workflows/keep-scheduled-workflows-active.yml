@@ -1,0 +1,43 @@
+name: Keep Scheduled Workflows Active
+
+on:
+  # GitHub disables scheduled workflows in public repositories after 60 days
+  # without repository activity. Check weekly and renew before that cutoff.
+  schedule:
+    - cron: '37 0 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: scheduled-workflows-keepalive
+  cancel-in-progress: false
+
+jobs:
+  renew-repository-activity:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the default branch
+        uses: actions/checkout@v4
+
+      - name: Renew activity when the repository is nearing inactivity
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          last_commit_epoch="$(git log -1 --format=%ct)"
+          current_epoch="$(date +%s)"
+          inactive_days="$(( (current_epoch - last_commit_epoch) / 86400 ))"
+
+          echo "The latest commit is ${inactive_days} day(s) old."
+
+          if (( inactive_days < 45 )); then
+            echo "No renewal is needed yet."
+            exit 0
+          fi
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit --allow-empty -m 'chore: renew scheduled workflows'
+          git push origin "HEAD:${{ github.event.repository.default_branch }}"
