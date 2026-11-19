@@ -14,7 +14,7 @@ on:
 
 jobs:
   check-ipo-status:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       should_apply: ${{ steps.check-status.outputs.should_apply }}
     steps:
@@ -30,7 +30,7 @@ jobs:
         fi
 
   apply-ipos:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: check-ipo-status
     if: needs.check-ipo-status.outputs.should_apply == 'true'
     
